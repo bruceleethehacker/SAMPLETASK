@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HappyHearts SVK Hospital</title>
+
+<style>
+/* ===== GENERAL ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f0f9ff;
+}
+
+/* ===== HEADER & LOGO ===== */
+header{
+    background:linear-gradient(45deg,#0077b6,#00b4d8);
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+    position:fixed;
+    width:100%;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo .heart{
+    font-size:40px;
+    animation:beat 1s infinite;
+}
+
+.logo-text span{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo-text small{
+    font-size:12px;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+}
+
+nav ul li{
+    margin-left:20px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+}
+
+nav ul li a:hover{
+    color:#ffd60a;
+}
+
+/* ===== HERO ===== */
+.hero{
+    height:100vh;
+    background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1579684385127-1ef15d508118');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+    position:relative;
+}
+
+.hero h2{
+    font-size:48px;
+    animation:fadeIn 2s ease-in-out;
+}
+
+.hero p{
+    font-size:20px;
+    margin:20px 0;
+}
+
+.hero button{
+    padding:12px 30px;
+    border:none;
+    background:#00b4d8;
+    color:white;
+    font-size:16px;
+    border-radius:25px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.hero button:hover{
+    background:#ffd60a;
+    color:black;
+}
+
+/* ===== EVENTS ===== */
+.events{
+    padding:80px 20px;
+    text-align:center;
+}
+
+.events h2{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+#eventCountdown{
+    font-size:24px;
+    color:#0077b6;
+    margin-bottom:40px;
+}
+
+.event-container{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.event-card{
+    background:white;
+    width:260px;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.4s;
+    cursor:pointer;
+}
+
+.event-card:hover{
+    transform:scale(1.05);
+    background:#caf0f8;
+}
+
+.event-card h3{
+    color:#0077b6;
+    margin-bottom:15px;
+}
+
+/* ===== DOCTORS ===== */
+.doctors{
+    padding:80px 20px;
+    background:#e0f7ff;
+    text-align:center;
+}
+
+.doctor-container{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.doctor{
+    background:white;
+    padding:20px;
+    width:220px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.doctor:hover{
+    transform:translateY(-10px);
+}
+
+.doctor img{
+    width:100%;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+/* ===== MODAL ===== */
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:1001;
+}
+
+.modal-content{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    max-width:400px;
+    text-align:center;
+    position:relative;
+}
+
+.modal-content img{
+    width:150px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.close-btn{
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* ===== CONTACT ===== */
+.contact{
+    padding:80px 20px;
+    background:#f1faff;
+    text-align:center;
+}
+
+.contact h2{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    margin-bottom:40px;
+    color:#555;
+}
+
+.contact-container{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.contact-info{
+    max-width:300px;
+    text-align:left;
+}
+
+.contact-info h3{
+    color:#0077b6;
+    margin-bottom:15px;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    width:300px;
+}
+
+form input, form textarea, form select{
+    margin-bottom:15px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
+form textarea{
+    resize:none;
+    height:100px;
+}
+
+form button{
+    padding:10px;
+    border:none;
+    border-radius:20px;
+    background:#00b4d8;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+form button:hover{
+    background:#0077b6;
+}
+
+/* ===== FOOTER ===== */
+footer{
+    background:#0077b6;
+    color:white;
+    text-align:center;
+    padding:15px;
+}
+
+/* ===== EMERGENCY BUTTON ===== */
+.emergency-btn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:red;
+    color:white;
+    border:none;
+    padding:15px 20px;
+    border-radius:50px;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    transition:0.3s;
+    z-index:999;
+}
+.emergency-btn:hover{
+    transform:scale(1.1);
+    background:#ff4d4d;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(-20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes beat {
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.3);}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+    .hero h2{
+        font-size:30px;
+    }
+    .doctor-container{
+        flex-direction:column;
+        align-items:center;
+    }
+    .event-container{
+        flex-direction:column;
+        align-items:center;
+    }
+    .contact-container{
+        flex-direction:column;
+        align-items:center;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">
+        <div class="heart">❤️</div>
+        <div class="logo-text">
+            <span>HappyHearts</span><br>
+            <small>SVK Hospital</small>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="#" onclick="emergency()">Emergency</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <h2>We Cure With Care… and Maybe with a Smile 😄</h2>
+        <p>Because laughter is the best medicine (but we also have real doctors).</p>
+        <button onclick="appointment()">Book a Checkup</button>
+    </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+    <h2>🎉 Creative Health Events</h2>
+    <div id="eventCountdown"></div>
+    <div class="event-container">
+        <div class="event-card">
+            <h3>Free Smile Camp 😁</h3>
+            <p>Dental checkups + Free jokes from our dentists.</p>
+        </div>
+        <div class="event-card">
+            <h3>Heart Day ❤️</h3>
+            <p>Free BP check & “Love Your Heart” selfie booth.</p>
+        </div>
+        <div class="event-card">
+            <h3>Fitness Friday 💪</h3>
+            <p>Doctors challenge patients to 10 jumping jacks!</p>
+        </div>
+    </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="doctors" id="doctors">
+    <h2>👩‍⚕️ Meet Our Super Doctors</h2>
+    <div class="doctor-container">
+        <div class="doctor" data-name="Dr. Sanu" data-role="Cardiologist ❤️" data-img="https://randomuser.me/api/portraits/women/44.jpg">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg">
+            <h4>Dr. Sanu</h4>
+            <p>Cardiologist ❤️</p>
+        </div>
+        <div class="doctor" data-name="Dr. Priya" data-role="Pediatrician 👶" data-img="https://randomuser.me/api/portraits/women/68.jpg">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg">
+            <h4>Dr. Priya</h4>
+            <p>Pediatrician 👶</p>
+        </div>
+        <div class="doctor" data-name="Dr. Samreen" data-role="Neurologist 🧠" data-img="https://randomuser.me/api/portraits/women/65.jpg">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg">
+            <h4>Dr. Samreen</h4>
+            <p>Neurologist 🧠</p>
+        </div>
+        <div class="doctor" data-name="Dr. Vikram" data-role="Orthopedic 💪" data-img="https://randomuser.me/api/portraits/men/32.jpg">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg">
+            <h4>Dr. Vikram</h4>
+            <p>Orthopedic 💪</p>
+        </div>
+    </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="doctorModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img id="modalImg" src="">
+        <h3 id="modalName"></h3>
+        <p id="modalRole"></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Experienced doctor with 10+ years of practice.</p>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+    <h2>📞 Contact Us</h2>
+    <p class="subtitle">Feeling sick? Or just missing us? Send a message! 😄</p>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h3>🏥 HappyHearts SVK Hospital</h3>
+            <p>📍 SVK College Opposite, Koppal</p>
+            <p>📞 +91 98765 43210</p>
+            <p>📧 care@happyhearts.com</p>
+            <p>🕒 Open 24/7</p>
+        </div>
+
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <select id="doctorSelect">
+                <option value="">Select Doctor</option>
+                <option>Dr. Sanu</option>
+                <option>Dr. Priya</option>
+                <option>Dr. Samreen</option>
+                <option>Dr. Vikram</option>
+            </select>
+            <input type="date" id="date" required>
+            <textarea id="message" placeholder="Your Message..." required></textarea>
+            <button type="submit">Send Message 💌</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    © 2026 HappyHearts SVK Hospital | Stay Healthy, Stay Happy 😄
+</footer>
+
+<!-- EMERGENCY BUTTON -->
+<button class="emergency-btn" onclick="emergency()">🚑 Emergency</button>
+
+<script>
+// ALERT FUNCTIONS
+function appointment(){
+    alert("Great choice! Our doctors are preparing their stethoscopes 😄");
+}
+
+function emergency(){
+    alert("🚑 Emergency! Don’t worry, our team runs faster than WiFi!");
+}
+
+// CONTACT FORM
+document.addEventListener("DOMContentLoaded", function(){
+    document.getElementById("contactForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let doctor = document.getElementById("doctorSelect").value;
+        let date = document.getElementById("date").value;
+        let message = document.getElementById("message").value.trim();
+
+        if(name === "" || email === "" || message === "" || doctor === "" || date === ""){
+            alert("⚠ Please fill all fields before we send the ambulance! 😅");
+            return;
+        }
+
+        alert(`✅ Thank you ${name}! Your appointment with ${doctor} on ${date} is confirmed 😄`);
+        this.reset();
+    });
+});
+
+// DOCTOR MODAL
+const modal = document.getElementById("doctorModal");
+const modalImg = document.getElementById("modalImg");
+const modalName = document.getElementById("modalName");
+const modalRole = document.getElementById("modalRole");
+
+document.querySelectorAll(".doctor").forEach(doc=>{
+    doc.addEventListener("click", ()=>{
+        modal.style.display="flex";
+        modalImg.src = doc.dataset.img;
+        modalName.textContent = doc.dataset.name;
+        modalRole.textContent = doc.dataset.role;
+    });
+});
+
+function closeModal(){
+    modal.style.display="none";
+}
+
+// EVENT COUNTDOWN
+const countdownDate = new Date();
+countdownDate.setDate(countdownDate.getDate() + 5); // next event in 5 days
+
+function updateCountdown(){
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+    if(distance < 0){
+        document.getElementById("eventCountdown").textContent = "Next Event is Live!";
+        return;
+    }
+    const days = Math.floor(distance/(1000*60*60*24));
+    const hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    const minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+    const seconds = Math.floor((distance%(1000*60))/1000);
+    document.getElementById("eventCountdown").textContent = `Next Event starts in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+</script>
+
+</body>
+</html>
